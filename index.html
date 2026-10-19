@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  Części Hajder — strona sklepu z używanymi częściami
+  ------------------------------------------------------------
+  Struktura projektu:
+    index.html          – szkielet strony (nagłówek, stopka, miejsce na widoki)
+    css/style.css       – wszystkie style
+    js/data.js          – dane: zdjęcia, auta-dawcy, części
+    js/vin.js           – dekoder numeru VIN
+    js/templates.js     – szablony HTML poszczególnych widoków
+    js/app.js           – stan aplikacji, renderowanie i obsługa zdarzeń
+
+  Uwaga: oferty i zdjęcia są przykładowe (zdjęcia: Unsplash).
+  ============================================================
+-->
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Części Hajder – używane części samochodowe</title>
+  <meta name="description" content="Używane części samochodowe z własnej stacji demontażu w Wólce Sokołowskiej. Wyszukiwarka po VIN, 14 dni gwarancji rozruchowej.">
+
+  <!-- Czcionki: te same co na kasacjahajder.pl -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap">
+
+  <!-- Style strony -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ========== GÓRNY PASEK Z DANYMI KONTAKTOWYMI ========== -->
+  <div class="topbar">
+    <div class="wrap">
+      <div class="topbar__group">
+        <span>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15 15 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.6a1 1 0 01-.25 1z"/></svg>
+          Części: 666 285 795
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg>
+          hajder@wp.pl
+        </span>
+      </div>
+      <div class="topbar__group topbar__group--address">
+        <span>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 00-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z"/></svg>
+          Wólka Sokołowska 237, 36-050 Sokołów Małopolski
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== NAGŁÓWEK: LOGO, MENU, KOSZYK ========== -->
+  <header class="site-header">
+    <div class="wrap">
+      <button class="logo" data-go="home" aria-label="Części Hajder – strona główna">
+        <span class="logo__word">Części<b>Hajder</b><small>.pl</small></span>
+        <svg class="logo__car" viewBox="0 0 48 26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 18v-5l6-2 6-6h14l8 6 7 2v5"/>
+          <circle cx="12" cy="19" r="3.5"/>
+          <circle cx="36" cy="19" r="3.5"/>
+          <path d="M15.5 19h17"/>
+        </svg>
+      </button>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mainNav">Menu</button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Menu główne">
+        <button data-go="home">Start</button>
+        <button data-go="shop">Sklep</button>
+        <button data-go="vin">Szukaj po VIN</button>
+        <button data-go="kasacja">Kasacja</button>
+        <button data-go="kontakt">Kontakt</button>
+      </nav>
+
+      <button class="cart-btn" id="cartBtn" aria-label="Koszyk">
+        <svg class="cart-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 18a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4zM5.2 4H2V2h4.6l.9 2H21l-3.5 8H8.4l-1 2H19v2H4.2l2.6-4.9z"/></svg>
+        <span class="cart-btn__label">Koszyk</span>
+        <span class="cart-btn__count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========== TREŚĆ: tu app.js wstawia aktualny widok ========== -->
+  <main id="app"></main>
+
+  <!-- ========== STOPKA ========== -->
+  <footer class="site-footer">
+    <div class="wrap site-footer__cols">
+      <div>
+        <div class="logo logo--static">
+          <span class="logo__word">Części<b>Hajder</b><small>.pl</small></span>
+        </div>
+        <p class="site-footer__about">
+          Używane części z własnej stacji demontażu pojazdów. Każda część jest sprawdzona,
+          opisana i objęta 14-dniową gwarancją rozruchową.
+        </p>
+      </div>
+
+      <div>
+        <h4>Sklep</h4>
+        <ul>
+          <li><button data-go="shop">Wszystkie części</button></li>
+          <li><button data-go="vin">Wyszukiwarka VIN</button></li>
+          <li><button data-cat="Silnik">Silniki i osprzęt</button></li>
+          <li><button data-cat="Skrzynia biegów">Skrzynie biegów</button></li>
+          <li><button data-cat="Oświetlenie">Oświetlenie</button></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Firma</h4>
+        <ul>
+          <li><button data-go="kasacja">Kasacja pojazdów</button></li>
+          <li><button data-go="kontakt">Kontakt i dojazd</button></li>
+          <li><button data-go="kontakt">Regulamin i zwroty</button></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Dane kontaktowe</h4>
+        <ul>
+          <li>Wólka Sokołowska 237<br>36-050 Sokołów Małopolski</li>
+          <li>Części: <span class="mono">666 285 795</span></li>
+          <li>Kasacja: <span class="mono">797 807 809</span></li>
+          <li>Biuro: <span class="mono">697 020 093</span></li>
+          <li>hajder@wp.pl</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__legal">
+      <div class="wrap">
+        <span>© 2026 Części Hajder Sp. z o.o.</span>
+        <span>Projekt strony · oferty i zdjęcia części są przykładowe (zdjęcia: Unsplash)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Warstwy nakładane przez skrypt: koszyk / szczegóły części oraz komunikaty -->
+  <div id="overlay"></div>
+  <div id="toastHost" aria-live="polite"></div>
+
+  <!-- Skrypty: kolejność ma znaczenie (dane → VIN → szablony → aplikacja) -->
+  <script src="js/data.js"></script>
+  <script src="js/vin.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

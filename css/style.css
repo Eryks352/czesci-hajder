@@ -1,0 +1,1905 @@
+/* ============================================================
+   Części Hajder — arkusz stylów
+   ------------------------------------------------------------
+   Styl wzorowany na kasacjahajder.pl: czarny nagłówek i stopka,
+   jasna treść, czerwień z logo tylko jako akcent.
+
+   Spis treści:
+     1.  Zmienne (kolory, czcionki)
+     2.  Podstawy i elementy wspólne
+     3.  Górny pasek i nagłówek
+     4.  Przyciski
+     5.  Formularze
+     6.  Sekcje i nagłówki sekcji
+     7.  Hero strony głównej i wyszukiwarka
+     8.  Pasek zalet
+     9.  Kategorie
+     10. Karty części
+     11. Sklep (filtry, lista)
+     12. Podstrony (baner, panele)
+     13. Wyszukiwarka VIN
+     14. „Jak sprawdzamy części” i auta-dawcy
+     15. Pas „Kasacja”
+     16. Kontakt
+     17. Koszyk, szczegóły części, komunikaty
+     18. Stopka
+     19. Ograniczony ruch
+   ============================================================ */
+
+
+/* ---------- 1. Zmienne ---------- */
+
+:root {
+  /* Kolory z logo i oficjalnej strony */
+  --black: #111111;
+  --white: #ffffff;
+  --red: #e30613;
+  --red-dark: #b8040f;
+
+  /* Neutralne */
+  --bg: #f4f4f4;
+  --line: #e3e3e3;
+  --line-strong: #d6d6d6;
+  --ink: #222222;
+  --muted: #6d6d6d;
+
+  /* Stany */
+  --ok: #1f7a3d;
+  --warn: #a35a00;
+
+  /* Czcionki */
+  --f-head: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --f-body: "Roboto", "Segoe UI", Arial, sans-serif;
+  --f-mono: "Roboto Mono", ui-monospace, Consolas, monospace;
+
+  color-scheme: light;
+}
+
+
+/* ---------- 2. Podstawy i elementy wspólne ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 15.5px/1.6 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--f-head);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Kontener o stałej szerokości z marginesem bocznym */
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Tekst o stałej szerokości znaków: numery OE, VIN, kody */
+.mono {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Mały czerwony nadtytuł nad nagłówkiem */
+.eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  font: 500 13px/1.2 var(--f-body);
+  letter-spacing: 0.04em;
+  color: var(--red);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+ul.clean {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+
+/* ---------- 3. Górny pasek i nagłówek ---------- */
+
+.topbar {
+  background: var(--black);
+  color: #cfcfcf;
+  font-size: 13px;
+  border-bottom: 1px solid #262626;
+}
+
+.topbar .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 22px;
+  padding-block: 7px;
+}
+
+.topbar__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.topbar svg {
+  width: 13px;
+  height: 13px;
+  margin-right: 6px;
+  vertical-align: -2px;
+  color: var(--red);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(17, 17, 17, 0.97);
+  color: var(--white);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-block: 14px;
+}
+
+/* Logo: „CZĘŚCI” białe, „HAJDER” czerwone — jak na oficjalnej stronie */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.logo--static {
+  cursor: default;
+  margin-bottom: 14px;
+}
+
+.logo__word {
+  font: 600 25px/1 var(--f-head);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.logo__word b {
+  color: var(--red);
+  font-weight: 600;
+}
+
+.logo__word small {
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.logo__car {
+  flex: none;
+  width: 34px;
+  height: 20px;
+}
+
+/* Menu główne */
+.main-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.main-nav button {
+  padding: 10px 12px;
+  border: 0;
+  background: none;
+  color: #e6e6e6;
+  font: 400 15px/1 var(--f-head);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.main-nav button:hover {
+  color: var(--white);
+}
+
+.main-nav button[aria-current="page"] {
+  color: var(--white);
+  box-shadow: inset 0 -2px 0 var(--red);
+}
+
+/* Przycisk koszyka */
+.cart-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 0;
+  background: var(--red);
+  color: var(--white);
+  font: 500 15px/1 var(--f-head);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cart-btn:hover {
+  background: var(--red-dark);
+}
+
+.cart-btn__icon {
+  display: none;
+  width: 18px;
+  height: 18px;
+}
+
+.cart-btn__count {
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--red);
+  font: 500 12px/1 var(--f-mono);
+}
+
+/* Przycisk „Menu” — widoczny tylko na wąskich ekranach */
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 920px) {
+  .site-header .wrap {
+    position: relative;
+    gap: 10px;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+    padding: 9px 12px;
+    border: 1px solid #3a3a3a;
+    background: none;
+    color: var(--white);
+    font: 400 14px/1 var(--f-head);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 6px max(16px, env(safe-area-inset-left, 0px)) 14px;
+    border-top: 1px solid #262626;
+    background: var(--black);
+  }
+
+  .main-nav.is-open {
+    display: flex;
+  }
+
+  .main-nav button {
+    padding: 12px 0;
+    text-align: left;
+  }
+
+  .main-nav button[aria-current="page"] {
+    box-shadow: none;
+    color: var(--red);
+  }
+
+  .logo__word {
+    font-size: 21px;
+  }
+
+  .logo__word small {
+    font-size: 14px;
+  }
+
+  .logo__car {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .topbar__group--address {
+    display: none;
+  }
+
+  .logo__word {
+    font-size: 19px;
+  }
+
+  .menu-toggle {
+    padding: 8px 10px;
+  }
+
+  /* Na telefonie koszyk pokazuje tylko ikonę i liczbę */
+  .cart-btn {
+    padding: 9px 10px;
+  }
+
+  .cart-btn__label {
+    display: none;
+  }
+
+  .cart-btn__icon {
+    display: block;
+  }
+}
+
+
+/* ---------- 4. Przyciski ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border: 1px solid transparent;
+  font: 500 15px/1 var(--f-head);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Czerwony — główna akcja */
+.btn--red {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn--red:hover {
+  background: var(--red-dark);
+}
+
+/* Biały z czerwonym tekstem — na ciemnym tle, jak na oficjalnej stronie */
+.btn--white {
+  background: var(--white);
+  color: var(--red);
+}
+
+.btn--white:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+.btn--dark {
+  background: var(--black);
+  color: var(--white);
+}
+
+.btn--dark:hover {
+  background: #333333;
+}
+
+/* Obrys — akcja poboczna */
+.btn--line {
+  background: transparent;
+  border-color: #cfcfcf;
+  color: var(--ink);
+}
+
+.btn--line:hover {
+  border-color: var(--ink);
+}
+
+.btn--line-white {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--white);
+}
+
+.btn--line-white:hover {
+  border-color: var(--white);
+}
+
+/* Link tekstowy „Zobacz wszystkie” */
+.more {
+  padding: 0 0 4px;
+  border: 0;
+  border-bottom: 1px solid var(--ink);
+  background: none;
+  color: var(--ink);
+  font: 400 14px/1 var(--f-head);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.more:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+
+/* ---------- 5. Formularze ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field label {
+  font: 500 12.5px/1.2 var(--f-body);
+  color: var(--muted);
+}
+
+.input {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 15.5px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+/* Pole VIN: wielkie litery, czcionka o stałej szerokości */
+.vin-input {
+  font: 500 18px/1 var(--f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.vin-count {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.vin-count b {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.vin-count b.is-bad {
+  color: var(--red);
+}
+
+/* Pola checkbox / radio z opisem */
+.chk {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.chk input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--red);
+}
+
+.chk .n {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hint button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.hint button:hover {
+  color: var(--red);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 600px) {
+  .two {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Potwierdzenia pod formularzami */
+.notice {
+  padding: 13px 15px;
+  border-left: 3px solid var(--ok);
+  background: #f1f7f3;
+  font-size: 14px;
+}
+
+.notice--demo {
+  border-left-color: var(--red);
+  background: #fdf2f2;
+}
+
+
+/* ---------- 6. Sekcje i nagłówki sekcji ---------- */
+
+.section {
+  padding-block: 64px;
+}
+
+.section--white {
+  background: var(--white);
+}
+
+.sec-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.sec-head h2 {
+  font-size: clamp(26px, 3.2vw, 36px);
+}
+
+/* Krótka czerwona kreska pod nagłówkiem */
+.sec-head h2::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 2px;
+  margin-top: 12px;
+  background: var(--red);
+}
+
+.sec-head--center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sec-head--center h2::after {
+  margin-inline: auto;
+}
+
+
+/* ---------- 7. Hero strony głównej i wyszukiwarka ---------- */
+
+.hero {
+  position: relative;
+  background: #151515 center / cover no-repeat;
+  color: var(--white);
+}
+
+/* Ciemna nakładka na zdjęcie */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    rgba(10, 10, 10, 0.88) 0%,
+    rgba(10, 10, 10, 0.72) 45%,
+    rgba(10, 10, 10, 0.45) 100%);
+}
+
+.hero .wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 470px;
+  align-items: center;
+  gap: 48px;
+  padding-block: 72px 80px;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5vw, 58px);
+}
+
+.hero h1 b {
+  color: var(--red);
+  font-weight: 500;
+}
+
+.hero__eyebrow {
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.hero__lead {
+  max-width: 48ch;
+  margin: 16px 0 28px;
+  font-size: 17px;
+  font-weight: 300;
+  color: #e3e3e3;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 980px) {
+  .hero .wrap {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-block: 44px 52px;
+  }
+}
+
+/* Biały panel wyszukiwarki z zakładkami */
+.finder {
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 20px 50px -24px rgba(0, 0, 0, 0.6);
+}
+
+.finder__tabs {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+}
+
+.finder__tabs button {
+  flex: 1;
+  margin-bottom: -1px;
+  padding: 16px 10px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  font: 500 15px/1 var(--f-head);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.finder__tabs button[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--red);
+}
+
+.finder__body {
+  padding: 22px 22px 24px;
+}
+
+
+/* ---------- 8. Pasek zalet ---------- */
+
+.perks {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+
+.perks .wrap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 18px;
+}
+
+.perk + .perk {
+  border-left: 1px solid var(--line);
+}
+
+.perk svg {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  color: var(--red);
+}
+
+.perk b {
+  display: block;
+  font: 500 16px/1.2 var(--f-head);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.perk span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .perks .wrap {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .perk:nth-child(3) {
+    border-left: 0;
+  }
+
+  .perk:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 480px) {
+  .perks .wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .perk + .perk {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .perk:nth-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+
+/* ---------- 9. Kategorie ---------- */
+
+.cats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cat {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 0;
+  background: #222222;
+  color: var(--white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.cat img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+/* Przyciemnienie dołu zdjęcia pod podpisem */
+.cat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.78) 100%);
+}
+
+.cat__label {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  z-index: 1;
+}
+
+.cat__label b {
+  display: block;
+  font: 500 19px/1.1 var(--f-head);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cat__label small {
+  font-size: 12.5px;
+  color: #d8d8d8;
+}
+
+.cat:hover img {
+  transform: scale(1.04);
+}
+
+@media (max-width: 900px) {
+  .cats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* ---------- 10. Karty części ---------- */
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--white);
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.35);
+}
+
+/* Zdjęcie części */
+.card__photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  background: #e9e9e9;
+  cursor: pointer;
+}
+
+.card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card__photo .grade {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+/* Podpis „Zdjęcie przykładowe” */
+.photo-note {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 3px 8px;
+  background: rgba(17, 17, 17, 0.72);
+  color: var(--white);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+}
+
+.card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px 0;
+}
+
+.card__cat {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.card__title {
+  font: 500 17.5px/1.25 var(--f-head);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+
+.card__title:hover {
+  color: var(--red);
+}
+
+.card__fit {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.card__oe {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding: 14px 16px 16px;
+}
+
+.price {
+  font: 500 22px/1 var(--f-head);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.price small {
+  margin-left: 4px;
+  font: 400 11.5px/1 var(--f-body);
+  color: var(--muted);
+}
+
+/* Przycisk „Do koszyka” */
+.add {
+  padding: 9px 12px;
+  border: 1px solid var(--red);
+  background: var(--white);
+  color: var(--red);
+  font: 500 13px/1 var(--f-head);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.add:hover {
+  background: var(--red);
+  color: var(--white);
+}
+
+.add.is-in {
+  border-color: var(--ok);
+  background: var(--ok);
+  color: var(--white);
+}
+
+/* Etykieta klasy stanu: A / B / C */
+.tag {
+  display: inline-block;
+  padding: 5px 7px;
+  background: var(--white);
+  color: var(--ink);
+  font: 500 11px/1 var(--f-body);
+  white-space: nowrap;
+}
+
+.grade--a { color: var(--ok); }
+.grade--b { color: #8a6100; }
+.grade--c { color: var(--red); }
+
+
+/* ---------- 11. Sklep (filtry, lista) ---------- */
+
+.shop {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  align-items: start;
+  gap: 28px;
+}
+
+.filters {
+  position: sticky;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.filters h4 {
+  font-size: 15px;
+  letter-spacing: 0.06em;
+}
+
+.filters__group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.toolbar .input {
+  width: auto;
+}
+
+.toolbar .search {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Aktywne filtry jako „chipsy” do kliknięcia */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--line-strong);
+  background: var(--white);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.result-count {
+  margin: 0 0 14px;
+}
+
+.empty {
+  padding: 36px;
+  border: 1px dashed #cfcfcf;
+  background: var(--white);
+  text-align: center;
+}
+
+.empty h3 {
+  font-size: 20px;
+}
+
+@media (max-width: 900px) {
+  .shop {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    position: static;
+  }
+}
+
+
+/* ---------- 12. Podstrony (baner, panele) ---------- */
+
+/* Baner ze zdjęciem na górze podstrony */
+.page-hero {
+  position: relative;
+  background: #151515 center / cover no-repeat;
+  color: var(--white);
+}
+
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.78);
+}
+
+.page-hero .wrap {
+  position: relative;
+  padding-block: 52px;
+}
+
+.page-hero h1 {
+  font-size: clamp(30px, 4.2vw, 46px);
+}
+
+.page-hero p {
+  max-width: 62ch;
+  margin: 12px 0 0;
+  font-weight: 300;
+  color: #dcdcdc;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 24px;
+}
+
+.panel {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.panel--error {
+  border-left: 3px solid var(--red);
+}
+
+.panel h2 { font-size: 26px; }
+.panel h3 { font-size: 22px; }
+.panel h4 { font-size: 15px; }
+
+.panel__text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ---------- 13. Wyszukiwarka VIN ---------- */
+
+.vin-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 760px;
+  margin-top: 24px;
+}
+
+.vin-form .input {
+  flex: 1;
+  min-width: 230px;
+}
+
+.vin-examples {
+  margin-top: 12px;
+  color: #cfcfcf;
+}
+
+/* VIN rozbity na 17 pól z numerami pozycji */
+.vin-chars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: 10px 0 18px;
+}
+
+.vin-chars span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 27px;
+  padding: 6px 2px 5px;
+  background: var(--bg);
+  font: 500 17px/1 var(--f-mono);
+}
+
+.vin-chars small {
+  margin-top: 5px;
+  font: 400 9px/1 var(--f-mono);
+  color: var(--muted);
+}
+
+.vin-chars .is-wmi {            /* znaki 1–3: producent */
+  background: var(--black);
+  color: var(--white);
+}
+
+.vin-chars .is-wmi small {
+  color: #aaaaaa;
+}
+
+.vin-chars .is-year {           /* znak 10: rok modelowy */
+  background: var(--red);
+  color: var(--white);
+}
+
+.vin-chars .is-year small {
+  color: #ffd0d4;
+}
+
+/* Tabela wyników odczytu */
+.kv {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  border-top: 1px solid var(--line);
+}
+
+.kv div {
+  min-width: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+
+.kv div:nth-child(odd) {
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status--ok { color: var(--ok); }
+.status--warn { color: var(--warn); }
+
+.vin-results {
+  margin-top: 44px;
+}
+
+/* Legenda „Budowa numeru VIN” */
+.vin-legend {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.vin-legend div {
+  padding: 20px;
+}
+
+.vin-legend div + div {
+  border-left: 1px solid var(--line);
+}
+
+.vin-legend b {
+  display: block;
+  margin-bottom: 8px;
+  font: 500 12px/1 var(--f-mono);
+  color: var(--red);
+}
+
+.vin-legend h3 {
+  margin-bottom: 6px;
+  font-size: 17px;
+}
+
+.vin-legend p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .kv {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+
+  .vin-legend {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .vin-legend div {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .vin-legend div + div {
+    border-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .vin-legend {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ---------- 14. „Jak sprawdzamy części” i auta-dawcy ---------- */
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 48px;
+}
+
+.about img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.about h2 {
+  font-size: clamp(26px, 3.2vw, 36px);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.steps li > b {
+  font: 500 15px/1.4 var(--f-head);
+  color: var(--red);
+}
+
+.steps h3 {
+  margin-bottom: 2px;
+  font-size: 16px;
+}
+
+.steps p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 860px) {
+  .about {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+/* Karty aut-dawców */
+.donors {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.donor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.donor:hover {
+  border-color: #bdbdbd;
+}
+
+.donor__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.donor__new {
+  font-weight: 500;
+  color: var(--red);
+}
+
+.donor h3 {
+  font-size: 19px;
+}
+
+.donor dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3px 12px;
+  margin: 0;
+  font-size: 13.5px;
+}
+
+.donor dt {
+  color: var(--muted);
+}
+
+.donor dd {
+  margin: 0;
+}
+
+.donor__link {
+  font: 400 13px/1 var(--f-head);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+
+/* ---------- 15. Pas „Kasacja” ---------- */
+
+.band {
+  position: relative;
+  background: #151515 center / cover no-repeat;
+  color: var(--white);
+}
+
+.band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.8);
+}
+
+.band .wrap {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-block: 56px;
+}
+
+.band h2 {
+  font-size: clamp(26px, 3.4vw, 38px);
+}
+
+.band p {
+  max-width: 56ch;
+  margin: 10px 0 0;
+  font-weight: 300;
+  color: #dcdcdc;
+}
+
+
+/* ---------- 16. Kontakt ---------- */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.big-number {
+  font: 500 24px/1.1 var(--f-head);
+  font-variant-numeric: tabular-nums;
+  user-select: all;
+}
+
+.copy {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 5px 10px;
+  border: 1px solid var(--line-strong);
+  background: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.copy:hover {
+  border-color: var(--ink);
+}
+
+.contact-more {
+  margin-top: 20px;
+}
+
+@media (max-width: 800px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ---------- 17. Koszyk, szczegóły części, komunikaty ---------- */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+/* Wysuwany koszyk */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  width: min(430px, 100%);
+  background: var(--white);
+}
+
+.drawer__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer__head h2 {
+  font-size: 22px;
+}
+
+.drawer__lines {
+  flex: 1;
+  overflow: auto;
+  padding: 4px 20px;
+}
+
+.close {
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* Pozycja w koszyku / podsumowaniu */
+.line {
+  display: grid;
+  grid-template-columns: 60px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.line img {
+  width: 60px;
+  height: 45px;
+  object-fit: cover;
+}
+
+.line b {
+  display: block;
+  font: 500 15px/1.2 var(--f-head);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.line small {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.line__remove {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--line);
+}
+
+.totals--plain {
+  padding: 0;
+  border: 0;
+}
+
+.totals__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totals__label {
+  font: 500 18px/1 var(--f-head);
+  text-transform: uppercase;
+}
+
+/* Okno ze szczegółami części */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  pointer-events: none;
+}
+
+.modal__box {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  width: min(900px, 100%);
+  max-height: calc(100% - 32px);
+  overflow: auto;
+  background: var(--white);
+  pointer-events: auto;
+}
+
+.modal__photo {
+  position: relative;
+  min-height: 320px;
+  background: #e9e9e9;
+}
+
+.modal__photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal__info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 26px;
+}
+
+.modal__info h2 {
+  font-size: 26px;
+}
+
+.modal__info .tag {
+  align-self: flex-start;
+  border: 1px solid currentColor;
+}
+
+.modal__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.modal__buy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.modal__buy .price {
+  font-size: 30px;
+}
+
+.spec {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.spec dt {
+  color: var(--muted);
+}
+
+.spec dd {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .modal__box {
+    grid-template-columns: 1fr;
+  }
+
+  .modal__photo {
+    min-height: 220px;
+  }
+}
+
+/* Krótki komunikat na dole ekranu */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  z-index: 100;
+  max-width: calc(100% - 32px);
+  padding: 12px 18px;
+  border-left: 3px solid var(--red);
+  background: var(--black);
+  color: var(--white);
+  font-size: 14px;
+  transform: translateX(-50%);
+}
+
+
+/* ---------- 18. Stopka ---------- */
+
+.site-footer {
+  background: var(--black);
+  color: #a9a9a9;
+  font-size: 14px;
+}
+
+.site-footer__cols {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 28px;
+  padding-block: 52px 40px;
+}
+
+.site-footer__about {
+  max-width: 36ch;
+  margin: 0;
+}
+
+.site-footer h4 {
+  margin-bottom: 14px;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--white);
+}
+
+.site-footer ul {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.site-footer button:hover {
+  color: var(--white);
+}
+
+.site-footer__legal {
+  border-top: 1px solid #262626;
+}
+
+.site-footer__legal .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding-block: 16px;
+  font-size: 12.5px;
+}
+
+@media (max-width: 800px) {
+  .site-footer__cols {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 460px) {
+  .site-footer__cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ---------- 19. Ograniczony ruch ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+
+  .cat:hover img {
+    transform: none;
+  }
+}
