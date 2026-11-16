@@ -763,6 +763,10 @@ function checkoutView(state) {
           <div><span class="eyebrow">Zamówienie</span><h2>Dostawa i płatność</h2></div>
         </div>
 
+        <div class="notice notice--demo" style="margin-bottom: 24px">
+          <b>Demo:</b> dane, ceny i zdjęcia są przykładowe. Po kliknięciu „Zamawiam i płacę” zamówienie nie zostaje nigdzie wysłane. Nie wpisuj prawdziwych danych.
+        </div>
+
         <form class="two-col" id="checkoutForm">
           <!-- Dane klienta -->
           <div class="panel stack">
